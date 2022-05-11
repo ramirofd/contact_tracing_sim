@@ -21,7 +21,11 @@ import inet.mobility.contract.IMobility;
 
 module Node
 {
+    int numNodes;
     submodules:
+        app: ContactTracingApp{
+            numNodes = parent.numNodes;
+        }
     	mobility: <default("StationaryMobility")> like IMobility {
             @display("p=100,100;is=s");
         }

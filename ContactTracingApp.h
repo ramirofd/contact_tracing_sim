@@ -13,12 +13,28 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-network ContactTracing
+#ifndef __CONTACT_TRACING_SIM_CONTACTTRACINGAPP_H_
+#define __CONTACT_TRACING_SIM_CONTACTTRACINGAPP_H_
+
+#include <omnetpp.h>
+
+using namespace omnetpp;
+using namespace std;
+
+/**
+ * TODO - Generated class
+ */
+class ContactTracingApp : public cSimpleModule
 {
-    parameters:
-        int numNodes;
-    submodules:
-        nodes[numNodes]: Node{
-            numNodes = parent.numNodes-1;
-        };
-}
+  private:
+    vector<cModule*> *nodes;
+
+    void discoverNetworkNodes();
+    void broadcastMsg(cMessage msg);
+
+  protected:
+    virtual void initialize() override;
+    virtual void handleMessage(cMessage *msg) override;
+};
+
+#endif

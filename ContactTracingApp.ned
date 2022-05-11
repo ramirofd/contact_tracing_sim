@@ -13,12 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-network ContactTracing
+//
+// TODO auto-generated module
+//
+simple ContactTracingApp
 {
     parameters:
         int numNodes;
-    submodules:
-        nodes[numNodes]: Node{
-            numNodes = parent.numNodes-1;
-        };
+    gates:
+        input ble @directIn;
 }
