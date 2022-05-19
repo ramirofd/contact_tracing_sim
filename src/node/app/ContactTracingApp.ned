@@ -16,18 +16,10 @@
 //
 // TODO auto-generated module
 //
+package src.node.app;
 
-import inet.mobility.contract.IMobility;
-
-module Node
+simple ContactTracingApp
 {
-    int numNodes;
-    submodules:
-        app: ContactTracingApp{
-            numNodes = parent.numNodes;
-        }
-    	mobility: <default("StationaryMobility")> like IMobility {
-            @display("p=100,100;is=s");
-        }
-    
+    gates:
+        input ble @directIn;
 }

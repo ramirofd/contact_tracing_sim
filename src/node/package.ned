@@ -13,13 +13,4 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO auto-generated module
-//
-simple ContactTracingApp
-{
-    parameters:
-        int numNodes;
-    gates:
-        input ble @directIn;
-}
+package src.node;

@@ -13,12 +13,4 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-import src.node.Node;
-
-network ContactTracing
-{
-    parameters:
-        int numNodes;
-    submodules:
-        nodes[numNodes]: Node;
-}
+package src.node.app;

@@ -13,12 +13,22 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-import src.node.Node;
+//
+// TODO auto-generated module
+//
+package src.node;
 
-network ContactTracing
+import inet.mobility.contract.IMobility;
+import src.node.app.ContactTracingApp;
+
+module Node
 {
     parameters:
-        int numNodes;
+        volatile double broadcastTime;
     submodules:
-        nodes[numNodes]: Node;
+        app: ContactTracingApp{}
+    	mobility: <default("StationaryMobility")> like IMobility {
+            @display("p=100,100;is=s");
+        }
+    
 }
