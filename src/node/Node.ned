@@ -25,15 +25,19 @@ import src.node.interface.Interface;
 module Node
 {
     parameters:
-        volatile double broadcastTime=default(5);
+        volatile double broadcastTime = default(5);
     submodules:
-        app: ContactTracingApp{}
-        iface: Interface{}
-    	mobility: <default("StationaryMobility")> like IMobility {
-            @display("p=100,100;is=s");
+        app: ContactTracingApp {
+            @display("p=39,127;is=vs");
         }
-        
+        iface: Interface {
+            @display("p=159,127;i=device/antennatower;is=l");
+        }
+        mobility: <default("StationaryMobility")> like IMobility {
+            @display("p=31,31;is=s");
+        }
+
     connections:
-        app.data <--> {} <--> iface.data;
-    
+        app.data <--> iface.data;
+
 }
