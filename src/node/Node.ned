@@ -20,15 +20,20 @@ package src.node;
 
 import inet.mobility.contract.IMobility;
 import src.node.app.ContactTracingApp;
+import src.node.interface.Interface;
 
 module Node
 {
     parameters:
-        volatile double broadcastTime;
+        volatile double broadcastTime=default(5);
     submodules:
         app: ContactTracingApp{}
+        iface: Interface{}
     	mobility: <default("StationaryMobility")> like IMobility {
             @display("p=100,100;is=s");
         }
+        
+    connections:
+        app.data <--> {} <--> iface.data;
     
 }

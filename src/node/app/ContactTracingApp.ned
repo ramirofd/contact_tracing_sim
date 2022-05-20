@@ -21,5 +21,5 @@ package src.node.app;
 simple ContactTracingApp
 {
     gates:
-        input ble @directIn;
+        inout data;
 }

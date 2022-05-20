@@ -13,21 +13,10 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#include "ContactTracingApp.h"
-#include "inet/mobility/contract/IMobility.h"
-
-using namespace inet;
-
-Define_Module(ContactTracingApp);
-
-void ContactTracingApp::initialize()
-{
-
-}
-
-void ContactTracingApp::handleMessage(cMessage *msg)
-{
-
-    IMobility *mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
-    EV << "I'm at " << mobility->getCurrentPosition();
+//
+// TODO generated message class
+//
+message ContactTracingMessage {
+    double position[2];
+    string UUID;
 }
