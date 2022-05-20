@@ -222,10 +222,10 @@ void ContactTracingMessage::setUUID(const char * UUID)
     this->UUID = UUID;
 }
 
-ContactTracingMessage* ContactTracingMessage::ctMessageFactory(double xpos, double ypos, omnetpp::opp_string uuid){
+ContactTracingMessage* ContactTracingMessage::ctMessageFactory(inet::Coord coord, omnetpp::opp_string uuid){
     ContactTracingMessage *msg = new ContactTracingMessage();
-    msg->setPosition(xpos, 0);
-    msg->setPosition(ypos, 1);
+    msg->setPosition(coord.x, 0);
+    msg->setPosition(coord.y, 1);
     msg->setUUID(uuid.c_str());
     return msg;
 }

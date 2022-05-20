@@ -9,6 +9,7 @@
 #  pragma clang diagnostic ignored "-Wreserved-id-macro"
 #endif
 #include <omnetpp.h>
+#include "inet/common/geometry/common/Coord.h"
 
 // opp_msgtool version check
 #define MSGC_VERSION 0x0600
@@ -33,7 +34,7 @@ class ContactTracingMessage;
 class ContactTracingMessage : public ::omnetpp::cMessage
 {
   protected:
-    double position[2] = {0};
+    double position[3] = {0};
     omnetpp::opp_string UUID;
 
   private:
@@ -57,7 +58,7 @@ class ContactTracingMessage : public ::omnetpp::cMessage
 
     virtual const char * getUUID() const;
     virtual void setUUID(const char * UUID);
-    static ContactTracingMessage* ctMessageFactory(double xpos, double ypos, omnetpp::opp_string uuid);
+    static ContactTracingMessage* ctMessageFactory(inet::Coord coord, omnetpp::opp_string uuid);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const ContactTracingMessage& obj) {obj.parsimPack(b);}

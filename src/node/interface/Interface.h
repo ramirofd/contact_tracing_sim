@@ -38,11 +38,3 @@ protected:
 };
 
 #endif
-
-//ContactTracingMessage* ContactTracingMessage::ctMessageFactory(int xpos, int ypos, omnetpp::opp_string uuid){
-//    ContactTracingMessage *msg = new ContactTracingMessage();
-//    msg->setPosition(xpos, 0);
-//    msg->setPosition(ypos, 1);
-//    msg->setUUID(uuid.c_str());
-//    return msg;
-//}

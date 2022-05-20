@@ -17,6 +17,6 @@
 // TODO generated message class
 //
 message ContactTracingMessage {
-    double position[2];
+    double position[3];
     string UUID;
 }
