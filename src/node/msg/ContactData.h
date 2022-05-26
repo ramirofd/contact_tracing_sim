@@ -23,3 +23,11 @@ public:
 };
 
 #endif /* NODE_MSG_CONTACTDATA_H_ */
+
+//ContactTracingMessage* ContactTracingMessage::ctMessageFactory(inet::Coord coord, omnetpp::opp_string uuid){
+//    ContactTracingMessage *msg = new ContactTracingMessage();
+//    msg->setPosition(coord.x, 0);
+//    msg->setPosition(coord.y, 1);
+//    msg->setUUID(uuid.c_str());
+//    return msg;
+//}

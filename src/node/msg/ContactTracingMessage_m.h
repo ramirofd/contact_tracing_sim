@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by opp_msgtool 6.0 from src/node/ContactTracingMessage.msg.
+// Generated file, do not edit! Created by opp_msgtool 6.0 from src/node/msg/ContactTracingMessage.msg.
 //
 
 #ifndef __CONTACTTRACINGMESSAGE_M_H
@@ -9,7 +9,6 @@
 #  pragma clang diagnostic ignored "-Wreserved-id-macro"
 #endif
 #include <omnetpp.h>
-#include "inet/common/geometry/common/Coord.h"
 
 // opp_msgtool version check
 #define MSGC_VERSION 0x0600
@@ -18,16 +17,17 @@
 #endif
 
 class ContactTracingMessage;
+// cplusplus {{
+#include "ContactData.h"  // assuming that MyClass is declared here 
+// }}
+
 /**
- * Class generated from <tt>src/node/ContactTracingMessage.msg:19</tt> by opp_msgtool.
+ * Class generated from <tt>src/node/msg/ContactTracingMessage.msg:27</tt> by opp_msgtool.
  * <pre>
- * //
- * // TODO generated message class
- * //
  * message ContactTracingMessage
  * {
- *     double position[2];
- *     string UUID;
+ *     double position[3];
+ *     ContactData data;
  * }
  * </pre>
  */
@@ -35,7 +35,7 @@ class ContactTracingMessage : public ::omnetpp::cMessage
 {
   protected:
     double position[3] = {0};
-    omnetpp::opp_string UUID;
+    ContactData data;
 
   private:
     void copy(const ContactTracingMessage& other);
@@ -56,9 +56,9 @@ class ContactTracingMessage : public ::omnetpp::cMessage
     virtual double getPosition(size_t k) const;
     virtual void setPosition(size_t k, double position);
 
-    virtual const char * getUUID() const;
-    virtual void setUUID(const char * UUID);
-    static ContactTracingMessage* ctMessageFactory(inet::Coord coord, omnetpp::opp_string uuid);
+    virtual const ContactData& getData() const;
+    virtual ContactData& getDataForUpdate() { return const_cast<ContactData&>(const_cast<ContactTracingMessage*>(this)->getData());}
+    virtual void setData(const ContactData& data);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const ContactTracingMessage& obj) {obj.parsimPack(b);}
@@ -67,6 +67,8 @@ inline void doParsimUnpacking(omnetpp::cCommBuffer *b, ContactTracingMessage& ob
 
 namespace omnetpp {
 
+inline any_ptr toAnyPtr(const ContactData *p) {if (auto obj = as_cObject(p)) return any_ptr(obj); else return any_ptr(p);}
+template<> inline ContactData *fromAnyPtr(any_ptr ptr) { return ptr.get<ContactData>(); }
 template<> inline ContactTracingMessage *fromAnyPtr(any_ptr ptr) { return check_and_cast<ContactTracingMessage*>(ptr.get<cObject>()); }
 
 }  // namespace omnetpp

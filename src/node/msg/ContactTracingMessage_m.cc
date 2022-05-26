@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by opp_msgtool 6.0 from src/node/ContactTracingMessage.msg.
+// Generated file, do not edit! Created by opp_msgtool 6.0 from src/node/msg/ContactTracingMessage.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -150,6 +150,291 @@ void doParsimUnpacking(omnetpp::cCommBuffer *, T& t)
 
 }  // namespace omnetpp
 
+class ContactDataDescriptor : public omnetpp::cClassDescriptor
+{
+  private:
+    mutable const char **propertyNames;
+    enum FieldConstants {
+    };
+  public:
+    ContactDataDescriptor();
+    virtual ~ContactDataDescriptor();
+
+    virtual bool doesSupport(omnetpp::cObject *obj) const override;
+    virtual const char **getPropertyNames() const override;
+    virtual const char *getProperty(const char *propertyName) const override;
+    virtual int getFieldCount() const override;
+    virtual const char *getFieldName(int field) const override;
+    virtual int findField(const char *fieldName) const override;
+    virtual unsigned int getFieldTypeFlags(int field) const override;
+    virtual const char *getFieldTypeString(int field) const override;
+    virtual const char **getFieldPropertyNames(int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyName) const override;
+    virtual int getFieldArraySize(omnetpp::any_ptr object, int field) const override;
+    virtual void setFieldArraySize(omnetpp::any_ptr object, int field, int size) const override;
+
+    virtual const char *getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const override;
+    virtual omnetpp::cValue getFieldValue(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const override;
+
+    virtual const char *getFieldStructName(int field) const override;
+    virtual omnetpp::any_ptr getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const override;
+    virtual void setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const override;
+};
+
+Register_ClassDescriptor(ContactDataDescriptor)
+
+ContactDataDescriptor::ContactDataDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(ContactData)), "")
+{
+    propertyNames = nullptr;
+}
+
+ContactDataDescriptor::~ContactDataDescriptor()
+{
+    delete[] propertyNames;
+}
+
+bool ContactDataDescriptor::doesSupport(omnetpp::cObject *obj) const
+{
+    return dynamic_cast<ContactData *>(obj)!=nullptr;
+}
+
+const char **ContactDataDescriptor::getPropertyNames() const
+{
+    if (!propertyNames) {
+        static const char *names[] = { "existingClass",  nullptr };
+        omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+        const char **baseNames = base ? base->getPropertyNames() : nullptr;
+        propertyNames = mergeLists(baseNames, names);
+    }
+    return propertyNames;
+}
+
+const char *ContactDataDescriptor::getProperty(const char *propertyName) const
+{
+    if (!strcmp(propertyName, "existingClass")) return "";
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->getProperty(propertyName) : nullptr;
+}
+
+int ContactDataDescriptor::getFieldCount() const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? 0+base->getFieldCount() : 0;
+}
+
+unsigned int ContactDataDescriptor::getFieldTypeFlags(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeFlags(field);
+        field -= base->getFieldCount();
+    }
+    return 0;
+}
+
+const char *ContactDataDescriptor::getFieldName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldName(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+int ContactDataDescriptor::findField(const char *fieldName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    return base ? base->findField(fieldName) : -1;
+}
+
+const char *ContactDataDescriptor::getFieldTypeString(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldTypeString(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+const char **ContactDataDescriptor::getFieldPropertyNames(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldPropertyNames(field);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+const char *ContactDataDescriptor::getFieldProperty(int field, const char *propertyName) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldProperty(field, propertyName);
+        field -= base->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+int ContactDataDescriptor::getFieldArraySize(omnetpp::any_ptr object, int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldArraySize(object, field);
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: return 0;
+    }
+}
+
+void ContactDataDescriptor::setFieldArraySize(omnetpp::any_ptr object, int field, int size) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldArraySize(object, field, size);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set array size of field %d of class 'ContactData'", field);
+    }
+}
+
+const char *ContactDataDescriptor::getFieldDynamicTypeString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldDynamicTypeString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+std::string ContactDataDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValueAsString(object,field,i);
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: return "";
+    }
+}
+
+void ContactDataDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, int i, const char *value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValueAsString(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactData'", field);
+    }
+}
+
+omnetpp::cValue ContactDataDescriptor::getFieldValue(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldValue(object,field,i);
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'ContactData' as cValue -- field index out of range?", field);
+    }
+}
+
+void ContactDataDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, const omnetpp::cValue& value) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldValue(object, field, i, value);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactData'", field);
+    }
+}
+
+const char *ContactDataDescriptor::getFieldStructName(int field) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructName(field);
+        field -= base->getFieldCount();
+    }
+    return nullptr;
+}
+
+omnetpp::any_ptr ContactDataDescriptor::getFieldStructValuePointer(omnetpp::any_ptr object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount())
+            return base->getFieldStructValuePointer(object, field, i);
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: return omnetpp::any_ptr(nullptr);
+    }
+}
+
+void ContactDataDescriptor::setFieldStructValuePointer(omnetpp::any_ptr object, int field, int i, omnetpp::any_ptr ptr) const
+{
+    omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
+    if (base) {
+        if (field < base->getFieldCount()){
+            base->setFieldStructValuePointer(object, field, i, ptr);
+            return;
+        }
+        field -= base->getFieldCount();
+    }
+    ContactData *pp = omnetpp::fromAnyPtr<ContactData>(object); (void)pp;
+    switch (field) {
+        default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactData'", field);
+    }
+}
+
 Register_Class(ContactTracingMessage)
 
 ContactTracingMessage::ContactTracingMessage(const char *name, short kind) : ::omnetpp::cMessage(name, kind)
@@ -175,59 +460,51 @@ ContactTracingMessage& ContactTracingMessage::operator=(const ContactTracingMess
 
 void ContactTracingMessage::copy(const ContactTracingMessage& other)
 {
-    for (size_t i = 0; i < 2; i++) {
+    for (size_t i = 0; i < 3; i++) {
         this->position[i] = other.position[i];
     }
-    this->UUID = other.UUID;
+    this->data = other.data;
 }
 
 void ContactTracingMessage::parsimPack(omnetpp::cCommBuffer *b) const
 {
     ::omnetpp::cMessage::parsimPack(b);
-    doParsimArrayPacking(b,this->position,2);
-    doParsimPacking(b,this->UUID);
+    doParsimArrayPacking(b,this->position,3);
+    doParsimPacking(b,this->data);
 }
 
 void ContactTracingMessage::parsimUnpack(omnetpp::cCommBuffer *b)
 {
     ::omnetpp::cMessage::parsimUnpack(b);
-    doParsimArrayUnpacking(b,this->position,2);
-    doParsimUnpacking(b,this->UUID);
+    doParsimArrayUnpacking(b,this->position,3);
+    doParsimUnpacking(b,this->data);
 }
 
 size_t ContactTracingMessage::getPositionArraySize() const
 {
-    return 2;
+    return 3;
 }
 
 double ContactTracingMessage::getPosition(size_t k) const
 {
-    if (k >= 2) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)2, (unsigned long)k);
+    if (k >= 3) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)3, (unsigned long)k);
     return this->position[k];
 }
 
 void ContactTracingMessage::setPosition(size_t k, double position)
 {
-    if (k >= 2) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)2, (unsigned long)k);
+    if (k >= 3) throw omnetpp::cRuntimeError("Array of size %lu indexed by %lu", (unsigned long)3, (unsigned long)k);
     this->position[k] = position;
 }
 
-const char * ContactTracingMessage::getUUID() const
+const ContactData& ContactTracingMessage::getData() const
 {
-    return this->UUID.c_str();
+    return this->data;
 }
 
-void ContactTracingMessage::setUUID(const char * UUID)
+void ContactTracingMessage::setData(const ContactData& data)
 {
-    this->UUID = UUID;
-}
-
-ContactTracingMessage* ContactTracingMessage::ctMessageFactory(inet::Coord coord, omnetpp::opp_string uuid){
-    ContactTracingMessage *msg = new ContactTracingMessage();
-    msg->setPosition(coord.x, 0);
-    msg->setPosition(coord.y, 1);
-    msg->setUUID(uuid.c_str());
-    return msg;
+    this->data = data;
 }
 
 class ContactTracingMessageDescriptor : public omnetpp::cClassDescriptor
@@ -236,7 +513,7 @@ class ContactTracingMessageDescriptor : public omnetpp::cClassDescriptor
     mutable const char **propertyNames;
     enum FieldConstants {
         FIELD_position,
-        FIELD_UUID,
+        FIELD_data,
     };
   public:
     ContactTracingMessageDescriptor();
@@ -316,7 +593,7 @@ unsigned int ContactTracingMessageDescriptor::getFieldTypeFlags(int field) const
     }
     static unsigned int fieldTypeFlags[] = {
         FD_ISARRAY | FD_ISEDITABLE,    // FIELD_position
-        FD_ISEDITABLE,    // FIELD_UUID
+        FD_ISCOMPOUND,    // FIELD_data
     };
     return (field >= 0 && field < 2) ? fieldTypeFlags[field] : 0;
 }
@@ -331,7 +608,7 @@ const char *ContactTracingMessageDescriptor::getFieldName(int field) const
     }
     static const char *fieldNames[] = {
         "position",
-        "UUID",
+        "data",
     };
     return (field >= 0 && field < 2) ? fieldNames[field] : nullptr;
 }
@@ -341,7 +618,7 @@ int ContactTracingMessageDescriptor::findField(const char *fieldName) const
     omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
     int baseIndex = base ? base->getFieldCount() : 0;
     if (strcmp(fieldName, "position") == 0) return baseIndex + 0;
-    if (strcmp(fieldName, "UUID") == 0) return baseIndex + 1;
+    if (strcmp(fieldName, "data") == 0) return baseIndex + 1;
     return base ? base->findField(fieldName) : -1;
 }
 
@@ -355,7 +632,7 @@ const char *ContactTracingMessageDescriptor::getFieldTypeString(int field) const
     }
     static const char *fieldTypeStrings[] = {
         "double",    // FIELD_position
-        "string",    // FIELD_UUID
+        "ContactData",    // FIELD_data
     };
     return (field >= 0 && field < 2) ? fieldTypeStrings[field] : nullptr;
 }
@@ -396,7 +673,7 @@ int ContactTracingMessageDescriptor::getFieldArraySize(omnetpp::any_ptr object, 
     }
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
-        case FIELD_position: return 2;
+        case FIELD_position: return 3;
         default: return 0;
     }
 }
@@ -442,7 +719,7 @@ std::string ContactTracingMessageDescriptor::getFieldValueAsString(omnetpp::any_
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
         case FIELD_position: return double2string(pp->getPosition(i));
-        case FIELD_UUID: return oppstring2string(pp->getUUID());
+        case FIELD_data: return "";
         default: return "";
     }
 }
@@ -460,7 +737,6 @@ void ContactTracingMessageDescriptor::setFieldValueAsString(omnetpp::any_ptr obj
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
         case FIELD_position: pp->setPosition(i,string2double(value)); break;
-        case FIELD_UUID: pp->setUUID((value)); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactTracingMessage'", field);
     }
 }
@@ -476,7 +752,7 @@ omnetpp::cValue ContactTracingMessageDescriptor::getFieldValue(omnetpp::any_ptr 
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
         case FIELD_position: return pp->getPosition(i);
-        case FIELD_UUID: return pp->getUUID();
+        case FIELD_data: return omnetpp::toAnyPtr(&pp->getData()); break;
         default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'ContactTracingMessage' as cValue -- field index out of range?", field);
     }
 }
@@ -494,7 +770,6 @@ void ContactTracingMessageDescriptor::setFieldValue(omnetpp::any_ptr object, int
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
         case FIELD_position: pp->setPosition(i,value.doubleValue()); break;
-        case FIELD_UUID: pp->setUUID(value.stringValue()); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactTracingMessage'", field);
     }
 }
@@ -508,6 +783,7 @@ const char *ContactTracingMessageDescriptor::getFieldStructName(int field) const
         field -= base->getFieldCount();
     }
     switch (field) {
+        case FIELD_data: return omnetpp::opp_typename(typeid(ContactData));
         default: return nullptr;
     };
 }
@@ -522,6 +798,7 @@ omnetpp::any_ptr ContactTracingMessageDescriptor::getFieldStructValuePointer(omn
     }
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
+        case FIELD_data: return omnetpp::toAnyPtr(&pp->getData()); break;
         default: return omnetpp::any_ptr(nullptr);
     }
 }

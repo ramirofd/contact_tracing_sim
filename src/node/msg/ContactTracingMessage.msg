@@ -16,7 +16,15 @@
 //
 // TODO generated message class
 //
+
+cplusplus {{
+#include "ContactData.h"  // assuming that MyClass is declared here 
+}};
+class ContactData {
+    @existingClass;
+}
+
 message ContactTracingMessage {
     double position[3];
-    string UUID;
+    ContactData data;
 }
