@@ -13,23 +13,24 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO generated message class
-//
+#ifndef NODE_APP_CONTACTWINDOW_H_
+#define NODE_APP_CONTACTWINDOW_H_
 
-cplusplus {{
-#include "ContactData.h"
-#include "inet/common/geometry/common/Coord.h"
-}};
-class ContactData {
-    @existingClass;
-}
+#include <omnetpp.h>
 
-class inet::Coord {
-    @existingClass;
-}
+using namespace std;
+using namespace omnetpp;
 
-message ContactTracingMessage {
-    inet::Coord coord;
-    ContactData data;
-}
+class ContactWindow {
+private:
+    string UUID;
+    string toldByUUID;
+    int hop;
+    simtime_t start;
+    simtime_t end;
+public:
+    ContactWindow();
+    virtual ~ContactWindow();
+};
+
+#endif /* NODE_APP_CONTACTWINDOW_H_ */

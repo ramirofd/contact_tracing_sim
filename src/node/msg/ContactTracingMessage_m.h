@@ -18,15 +18,16 @@
 
 class ContactTracingMessage;
 // cplusplus {{
-#include "ContactData.h"  // assuming that MyClass is declared here 
+#include "ContactData.h"
+#include "inet/common/geometry/common/Coord.h"
 // }}
 
 /**
- * Class generated from <tt>src/node/msg/ContactTracingMessage.msg:27</tt> by opp_msgtool.
+ * Class generated from <tt>src/node/msg/ContactTracingMessage.msg:32</tt> by opp_msgtool.
  * <pre>
  * message ContactTracingMessage
  * {
- *     double position[3];
+ *     inet::Coord coord;
  *     ContactData data;
  * }
  * </pre>
@@ -34,7 +35,7 @@ class ContactTracingMessage;
 class ContactTracingMessage : public ::omnetpp::cMessage
 {
   protected:
-    double position[3] = {0};
+    inet::Coord coord;
     ContactData data;
 
   private:
@@ -52,9 +53,9 @@ class ContactTracingMessage : public ::omnetpp::cMessage
     virtual void parsimPack(omnetpp::cCommBuffer *b) const override;
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
-    virtual size_t getPositionArraySize() const;
-    virtual double getPosition(size_t k) const;
-    virtual void setPosition(size_t k, double position);
+    virtual const inet::Coord& getCoord() const;
+    virtual inet::Coord& getCoordForUpdate() { return const_cast<inet::Coord&>(const_cast<ContactTracingMessage*>(this)->getCoord());}
+    virtual void setCoord(const inet::Coord& coord);
 
     virtual const ContactData& getData() const;
     virtual ContactData& getDataForUpdate() { return const_cast<ContactData&>(const_cast<ContactTracingMessage*>(this)->getData());}
@@ -69,6 +70,8 @@ namespace omnetpp {
 
 inline any_ptr toAnyPtr(const ContactData *p) {if (auto obj = as_cObject(p)) return any_ptr(obj); else return any_ptr(p);}
 template<> inline ContactData *fromAnyPtr(any_ptr ptr) { return ptr.get<ContactData>(); }
+inline any_ptr toAnyPtr(const inet::Coord *p) {if (auto obj = as_cObject(p)) return any_ptr(obj); else return any_ptr(p);}
+template<> inline inet::Coord *fromAnyPtr(any_ptr ptr) { return ptr.get<inet::Coord>(); }
 template<> inline ContactTracingMessage *fromAnyPtr(any_ptr ptr) { return check_and_cast<ContactTracingMessage*>(ptr.get<cObject>()); }
 
 }  // namespace omnetpp

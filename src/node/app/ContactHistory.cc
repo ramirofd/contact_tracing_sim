@@ -13,23 +13,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO generated message class
-//
+#include "ContactHistory.h"
 
-cplusplus {{
-#include "ContactData.h"
-#include "inet/common/geometry/common/Coord.h"
-}};
-class ContactData {
-    @existingClass;
+ContactHistory::ContactHistory() {
+    // TODO Auto-generated constructor stub
+
 }
 
-class inet::Coord {
-    @existingClass;
+ContactHistory::~ContactHistory() {
+    // TODO Auto-generated destructor stub
 }
 
-message ContactTracingMessage {
-    inet::Coord coord;
-    ContactData data;
-}

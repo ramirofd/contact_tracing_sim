@@ -13,23 +13,19 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-//
-// TODO generated message class
-//
+#ifndef NODE_APP_CONTACTHISTORY_H_
+#define NODE_APP_CONTACTHISTORY_H_
 
-cplusplus {{
-#include "ContactData.h"
-#include "inet/common/geometry/common/Coord.h"
-}};
-class ContactData {
-    @existingClass;
-}
+#include "ContactWindow.h"
 
-class inet::Coord {
-    @existingClass;
-}
+using namespace std;
 
-message ContactTracingMessage {
-    inet::Coord coord;
-    ContactData data;
-}
+class ContactHistory {
+private:
+    map<string, vector<ContactWindow*>> history;
+public:
+    ContactHistory();
+    virtual ~ContactHistory();
+};
+
+#endif /* NODE_APP_CONTACTHISTORY_H_ */

@@ -14,6 +14,10 @@
 // 
 
 #include "Interface.h"
+#include "inet/mobility/contract/IMobility.h"
+#include "src/node/msg/ContactTracingMessage_m.h"
+
+using namespace inet;
 
 Define_Module(Interface);
 
@@ -32,19 +36,24 @@ void Interface::discoverNetworkNodes() {
 }
 
 void Interface::broadcastMsg(cMessage *msg) {
+    ContactTracingMessage *copy = check_and_cast<ContactTracingMessage *>(msg);
+    IMobility *mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
+    copy->setCoord(mobility->getCurrentPosition());
     for(cModule *node : *this->nodes)
-        this->sendDirect(new cMessage(*msg), node->gate("ble"));
+        this->sendDirect(new ContactTracingMessage(*copy), node->gate("ble"));
 }
 
 void Interface::initialize()
 {
     this->nodes = new vector<cModule*>();
     discoverNetworkNodes();
-    broadcastMsg(new cMessage("holis"));
+    broadcastMsg(new ContactTracingMessage());
 }
 
 void Interface::handleMessage(cMessage *msg)
 {
+    ContactTracingMessage *copy = check_and_cast<ContactTracingMessage *>(msg);
+    EV<<"He is at x:"<<copy->getCoord().getX()<<" y: "<<copy->getCoord().getY()<<endl;
     cGate *inGate = msg->getArrivalGate();
     if ( inGate == gate("ble")) {
         cMessage *copy = msg->dup();
