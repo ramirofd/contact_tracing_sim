@@ -24,8 +24,6 @@ import src.node.interface.Interface;
 
 module Node
 {
-    parameters:
-        volatile double broadcastTime = default(5);
     submodules:
         app: ContactTracingApp {
             @display("p=39,127;is=vs");

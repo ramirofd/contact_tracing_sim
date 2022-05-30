@@ -23,7 +23,7 @@ Define_Module(ContactTracingApp);
 
 void ContactTracingApp::initialize()
 {
-    scheduleAfter(1, new cMessage());
+    scheduleAfter(par("broadcastTime"), new cMessage());
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
@@ -33,7 +33,7 @@ void ContactTracingApp::handleMessage(cMessage *msg)
         IMobility *mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
         newMsg->setCoord(mobility->getCurrentPosition());
         this->send(newMsg, gate("data$o"));
-        scheduleAfter(1, msg);
+        scheduleAfter(par("broadcastTime"), msg);
     } else {
         delete msg;
     }

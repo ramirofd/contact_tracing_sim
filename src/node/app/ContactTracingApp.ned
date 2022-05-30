@@ -20,6 +20,8 @@ package src.node.app;
 
 simple ContactTracingApp
 {
+    parameters:
+        double broadcastTime;
     gates:
         inout data;
 }
