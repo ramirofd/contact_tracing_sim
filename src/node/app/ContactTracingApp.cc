@@ -15,6 +15,7 @@
 
 #include "ContactTracingApp.h"
 #include "inet/mobility/contract/IMobility.h"
+#include "src/node/msg/ContactTracingMessage_m.h"
 
 using namespace inet;
 
@@ -22,12 +23,18 @@ Define_Module(ContactTracingApp);
 
 void ContactTracingApp::initialize()
 {
-
+    scheduleAfter(1, new cMessage());
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
 {
-
-    IMobility *mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
-    EV << "I'm at " << mobility->getCurrentPosition();
+    if(msg->isSelfMessage()){
+        ContactTracingMessage *newMsg = new ContactTracingMessage();
+        IMobility *mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
+        newMsg->setCoord(mobility->getCurrentPosition());
+        this->send(newMsg, gate("data$o"));
+        scheduleAfter(1, msg);
+    } else {
+        delete msg;
+    }
 }
