@@ -39,8 +39,11 @@ void ContactTracingApp::broadcastMsg(ContactTracingMessage *msg) {
         this->sendDirect(new ContactTracingMessage(*msg), node->gate("ble"));
 }
 
+double ContactTracingApp::calculateDistance(ContactTracingMessage *msg) {
+    return msg->getCoord().distance(this->mobility->getCurrentPosition());
+}
 bool ContactTracingApp::isInRange(ContactTracingMessage *msg) {
-    return msg->getCoord().distance(this->mobility->getCurrentPosition())<=par("range").doubleValue();
+    return this->calculateDistance(msg)<=par("range").doubleValue();
 }
 
 void ContactTracingApp::initialize()
@@ -61,6 +64,7 @@ void ContactTracingApp::handleMessage(cMessage *msg)
         scheduleAfter(par("broadcastTime"), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
+        EV << "Soy: " << this->getParentModule()->getFullName() << " y "<<((this->isInRange(cpy)==true)?"SI":"NO")<< " veo a " << cpy->getSenderModule()->getParentModule()->getFullName() << " porque esta a: " <<this->calculateDistance(cpy)<<"m"<<endl;
         if(this->isInRange(cpy)){
             EV << "Recibido de: " << cpy->getSenderModuleId() << " Soy: " << this->getId();
         }

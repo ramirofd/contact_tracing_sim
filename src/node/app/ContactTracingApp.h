@@ -35,6 +35,7 @@ private:
 
     void discoverNetworkNodes();
     void broadcastMsg(ContactTracingMessage *msg);
+    double calculateDistance(ContactTracingMessage *msg);
     bool isInRange(ContactTracingMessage *msg);
   protected:
     virtual void initialize() override;
