@@ -17,15 +17,25 @@
 #define __CONTACT_TRACING_SIM_CONTACTTRACINGAPP_H_
 
 #include <omnetpp.h>
+#include "src/node/msg/ContactTracingMessage_m.h"
+#include "inet/mobility/contract/IMobility.h"
 
 using namespace omnetpp;
 using namespace std;
+using namespace inet;
 
 /**
  * TODO - Generated class
  */
 class ContactTracingApp : public cSimpleModule
 {
+private:
+    vector<cModule*> *nodes;
+    IMobility *mobility;
+
+    void discoverNetworkNodes();
+    void broadcastMsg(ContactTracingMessage *msg);
+    bool isInRange(ContactTracingMessage *msg);
   protected:
     virtual void initialize() override;
     virtual void handleMessage(cMessage *msg) override;

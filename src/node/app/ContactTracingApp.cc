@@ -15,26 +15,55 @@
 
 #include "ContactTracingApp.h"
 #include "inet/mobility/contract/IMobility.h"
-#include "src/node/msg/ContactTracingMessage_m.h"
 
 using namespace inet;
 
 Define_Module(ContactTracingApp);
 
+void ContactTracingApp::discoverNetworkNodes() {
+    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
+    for (SubmoduleIterator it(network); !it.end(); ++it) {
+        cModule *node = *it;
+        cModule *nodeApp = node->getSubmodule("app");
+        if (nodeApp != nullptr) {
+            // check whether it is the same host
+            if (this != nodeApp) {
+                this->nodes->push_back(nodeApp);
+            }
+        }
+    }
+}
+
+void ContactTracingApp::broadcastMsg(ContactTracingMessage *msg) {
+    for(cModule *node : *this->nodes)
+        this->sendDirect(new ContactTracingMessage(*msg), node->gate("ble"));
+}
+
+bool ContactTracingApp::isInRange(ContactTracingMessage *msg) {
+    return msg->getCoord().distance(this->mobility->getCurrentPosition())<=par("range").doubleValue();
+}
+
 void ContactTracingApp::initialize()
 {
+    this->nodes = new vector<cModule*>();
+    this->discoverNetworkNodes();
+    this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
     scheduleAfter(par("broadcastTime"), new cMessage());
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
 {
+
     if(msg->isSelfMessage()){
         ContactTracingMessage *newMsg = new ContactTracingMessage();
-        IMobility *mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
-        newMsg->setCoord(mobility->getCurrentPosition());
-        this->send(newMsg, gate("data$o"));
+        newMsg->setCoord(this->mobility->getCurrentPosition());
+        this->broadcastMsg(newMsg);
         scheduleAfter(par("broadcastTime"), msg);
     } else {
+        ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
+        if(this->isInRange(cpy)){
+            EV << "Recibido de: " << cpy->getSenderModuleId() << " Soy: " << this->getId();
+        }
         delete msg;
     }
 }

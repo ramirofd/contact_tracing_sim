@@ -21,7 +21,8 @@ package src.node.app;
 simple ContactTracingApp
 {
     parameters:
+        double range;
         double broadcastTime;
     gates:
-        inout data;
+        input ble @directIn;
 }

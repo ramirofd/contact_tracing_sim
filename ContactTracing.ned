@@ -19,6 +19,7 @@ network ContactTracing
 {
     parameters:
         int numNodes;
+        @display("bgb=5,5");
     submodules:
         nodes[numNodes]: Node;
 }

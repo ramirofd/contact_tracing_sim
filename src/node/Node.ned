@@ -20,7 +20,6 @@ package src.node;
 
 import inet.mobility.contract.IMobility;
 import src.node.app.ContactTracingApp;
-import src.node.interface.Interface;
 
 module Node
 {
@@ -28,14 +27,8 @@ module Node
         app: ContactTracingApp {
             @display("p=39,127;is=vs");
         }
-        iface: Interface {
-            @display("p=159,127;i=device/antennatower;is=l");
-        }
         mobility: <default("StationaryMobility")> like IMobility {
             @display("p=31,31;is=s");
         }
-
-    connections:
-        app.data <--> iface.data;
 
 }
