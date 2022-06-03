@@ -15,9 +15,9 @@
 
 #include "ContactData.h"
 
-ContactData::ContactData() {
-    // TODO Auto-generated constructor stub
-
+ContactData::ContactData(int oUuid, int sUuid) {
+    this->ownUUID = oUuid;
+    this->seenUUID = sUuid;
 }
 
 ContactData::~ContactData() {

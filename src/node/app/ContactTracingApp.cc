@@ -13,10 +13,13 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
+#include <iomanip>
 #include "ContactTracingApp.h"
+#include "src/node/msg/ContactData.h"
 #include "inet/mobility/contract/IMobility.h"
 
 using namespace inet;
+using namespace std;
 
 Define_Module(ContactTracingApp);
 
@@ -46,27 +49,67 @@ bool ContactTracingApp::isInRange(ContactTracingMessage *msg) {
     return this->calculateDistance(msg)<=par("range").doubleValue();
 }
 
+string ContactTracingApp::strUuid(){
+    std::stringstream ss;
+    ss << std::setw(32) << std::setfill('0') << this->getNodeId();
+    string uuid = ss.str();
+    uuid = uuid.insert(20, "-");
+    uuid = uuid.insert(16, "-");
+    uuid = uuid.insert(12, "-");
+    uuid = uuid.insert(8, "-");
+    return uuid;
+}
+
+string ContactTracingApp::getNodeName() {
+    std::stringstream ss;
+    ss << "Node" << this->getNodeId();
+    string uuid = ss.str();
+    return uuid;
+}
+
+int ContactTracingApp::getNodeId(){
+    int id = par("UUID").intValue();
+    if(!id) {
+        string fullName = this->getParentModule()->getFullName();
+        unsigned first = fullName.find("[");
+        unsigned last = fullName.find_last_of("]");
+        string idstr = fullName.substr(first+1, last-first-1);
+        id = stoi(idstr);
+    }
+
+    return id+1;
+}
+
 void ContactTracingApp::initialize()
 {
     this->nodes = new vector<cModule*>();
     this->discoverNetworkNodes();
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
+    this->id = this->getNodeId();
     scheduleAfter(par("broadcastTime"), new cMessage());
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
 {
 
-    if(msg->isSelfMessage()){
+    if(msg->isSelfMessage())
+    {
+        //If self message, check whether to broadcast info or execute window closing procedure.
+
         ContactTracingMessage *newMsg = new ContactTracingMessage();
         newMsg->setCoord(this->mobility->getCurrentPosition());
+        newMsg->setData(new ContactData(this->id));
+
         this->broadcastMsg(newMsg);
         scheduleAfter(par("broadcastTime"), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
-        EV << "Soy: " << this->getParentModule()->getFullName() << " y "<<((this->isInRange(cpy)==true)?"SI":"NO")<< " veo a " << cpy->getSenderModule()->getParentModule()->getFullName() << " porque esta a: " <<this->calculateDistance(cpy)<<"m"<<endl;
         if(this->isInRange(cpy)){
-            EV << "Recibido de: " << cpy->getSenderModuleId() << " Soy: " << this->getId();
+//            ContactTracingApp *appcpy = check_and_cast<ContactTracingApp*>(cpy->getSenderModule());
+//            EV << "Soy: " << this->getNodeName() << " y "<<((this->isInRange(cpy)==true)?"SI":"NO")
+//                    << " veo a " << appcpy->getNodeName() << " porque esta a: "
+//                    <<this->calculateDistance(cpy)<<"m"<<endl;
+            cpy->getData();
         }
         delete msg;
     }

@@ -23,8 +23,8 @@ using namespace omnetpp;
 
 class ContactWindow {
 private:
-    string UUID;
-    string toldByUUID;
+    int contactId;
+    int toldById;
     int hop;
     simtime_t start;
     simtime_t end;

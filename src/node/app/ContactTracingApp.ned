@@ -21,6 +21,7 @@ package src.node.app;
 simple ContactTracingApp
 {
     parameters:
+        int UUID = default(0);
         double range;
         double broadcastTime;
     gates:

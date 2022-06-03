@@ -15,8 +15,10 @@
 
 #include "ContactHistory.h"
 
+using namespace std;
+
 ContactHistory::ContactHistory() {
-    // TODO Auto-generated constructor stub
+    this->history = new map<int, vector<ContactWindow*>>();
 
 }
 

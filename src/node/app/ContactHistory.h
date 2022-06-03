@@ -22,7 +22,7 @@ using namespace std;
 
 class ContactHistory {
 private:
-    map<string, vector<ContactWindow*>> history;
+    map<int, vector<ContactWindow*>> *history;
 public:
     ContactHistory();
     virtual ~ContactHistory();
