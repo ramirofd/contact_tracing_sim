@@ -65,7 +65,7 @@ void ContactTracingApp::finish() {
     stringstream fileName;
     fileName << "results/"<<this->getFileName()<<".csv";
     fstream fs;
-    fs.open (fileName.str(), std::fstream::app);
+    fs.open (fileName.str(),  std::fstream::app);
 
     for(auto it : *this->history->getAllWindows()) {
         fs << it->asCsv(this->getNodeId());
