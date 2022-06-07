@@ -15,12 +15,31 @@
 
 #include "ContactWindow.h"
 
-ContactWindow::ContactWindow() {
+ContactWindow::ContactWindow(int ctId, int tbId, int hop, simtime_t start) {
     // TODO Auto-generated constructor stub
-
+    this->contactId = ctId;
+    this->toldById = tbId;
+    this->hop = hop;
+    this->start = start;
+    this->end = start;
 }
 
 ContactWindow::~ContactWindow() {
     // TODO Auto-generated destructor stub
+
 }
 
+void ContactWindow::updateEndTimestamp(simtime_t end) {
+    this->end = end;
+}
+
+double ContactWindow::getWindowLength() {
+    return this->end.dbl()-this->start.dbl();
+}
+
+string ContactWindow::asCsv(int nodeId) {
+    std::stringstream ss;
+    ss << nodeId <<',' << this->contactId <<',' << this->toldById <<','
+            << this->hop <<',' << this->start <<',' << this->end << endl;
+    return ss.str();
+}

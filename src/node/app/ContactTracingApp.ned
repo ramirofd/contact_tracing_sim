@@ -21,6 +21,7 @@ package src.node.app;
 simple ContactTracingApp
 {
     parameters:
+        double windowTimeThreshold = default(5.0);
         int UUID = default(0);
         double range;
         double broadcastTime;

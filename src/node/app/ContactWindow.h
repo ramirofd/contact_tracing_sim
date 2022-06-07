@@ -29,8 +29,11 @@ private:
     simtime_t start;
     simtime_t end;
 public:
-    ContactWindow();
+    ContactWindow(int ctId, int tbId = -1, int hop = 1, simtime_t start = simTime());
     virtual ~ContactWindow();
+    void updateEndTimestamp(simtime_t end);
+    double getWindowLength();
+    string asCsv(int nodeId);
 };
 
 #endif /* NODE_APP_CONTACTWINDOW_H_ */

@@ -28,7 +28,7 @@ class ContactTracingMessage;
  * message ContactTracingMessage
  * {
  *     inet::Coord coord;
- *     ContactData *data;
+ *     ContactData data;
  * }
  * </pre>
  */
@@ -36,7 +36,7 @@ class ContactTracingMessage : public ::omnetpp::cMessage
 {
   protected:
     inet::Coord coord;
-    ContactData * data = nullptr;
+    ContactData data;
 
   private:
     void copy(const ContactTracingMessage& other);
@@ -57,9 +57,9 @@ class ContactTracingMessage : public ::omnetpp::cMessage
     virtual inet::Coord& getCoordForUpdate() { return const_cast<inet::Coord&>(const_cast<ContactTracingMessage*>(this)->getCoord());}
     virtual void setCoord(const inet::Coord& coord);
 
-    virtual const ContactData * getData() const;
-    virtual ContactData * getDataForUpdate() { return const_cast<ContactData *>(const_cast<ContactTracingMessage*>(this)->getData());}
-    virtual void setData(ContactData * data);
+    virtual const ContactData& getData() const;
+    virtual ContactData& getDataForUpdate() { return const_cast<ContactData&>(const_cast<ContactTracingMessage*>(this)->getData());}
+    virtual void setData(const ContactData& data);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const ContactTracingMessage& obj) {obj.parsimPack(b);}

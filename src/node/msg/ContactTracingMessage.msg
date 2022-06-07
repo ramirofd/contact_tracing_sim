@@ -31,5 +31,5 @@ class inet::Coord {
 
 message ContactTracingMessage {
     inet::Coord coord;
-    ContactData *data;
+    ContactData data;
 }

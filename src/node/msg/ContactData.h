@@ -25,9 +25,12 @@ private:
     int ownUUID;
     int seenUUID;
 public:
+    ContactData();
     ContactData(int oUuid):ContactData(oUuid, -1){};
     ContactData(int oUuid, int sUuid);
     virtual ~ContactData();
+    int getOwnId();
+    int getSeenId();
 };
 
 #endif /* NODE_MSG_CONTACTDATA_H_ */

@@ -773,12 +773,12 @@ void ContactTracingMessage::setCoord(const inet::Coord& coord)
     this->coord = coord;
 }
 
-const ContactData * ContactTracingMessage::getData() const
+const ContactData& ContactTracingMessage::getData() const
 {
     return this->data;
 }
 
-void ContactTracingMessage::setData(ContactData * data)
+void ContactTracingMessage::setData(const ContactData& data)
 {
     this->data = data;
 }
@@ -869,7 +869,7 @@ unsigned int ContactTracingMessageDescriptor::getFieldTypeFlags(int field) const
     }
     static unsigned int fieldTypeFlags[] = {
         FD_ISCOMPOUND,    // FIELD_coord
-        FD_ISCOMPOUND | FD_ISPOINTER | FD_ISREPLACEABLE,    // FIELD_data
+        FD_ISCOMPOUND,    // FIELD_data
     };
     return (field >= 0 && field < 2) ? fieldTypeFlags[field] : 0;
 }
@@ -979,7 +979,6 @@ const char *ContactTracingMessageDescriptor::getFieldDynamicTypeString(omnetpp::
     }
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
-        case FIELD_data: { const ContactData * value = pp->getData(); return omnetpp::opp_typename(typeid(*value)); }
         default: return nullptr;
     }
 }
@@ -1027,7 +1026,7 @@ omnetpp::cValue ContactTracingMessageDescriptor::getFieldValue(omnetpp::any_ptr 
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
         case FIELD_coord: return omnetpp::toAnyPtr(&pp->getCoord()); break;
-        case FIELD_data: return omnetpp::toAnyPtr(pp->getData()); break;
+        case FIELD_data: return omnetpp::toAnyPtr(&pp->getData()); break;
         default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'ContactTracingMessage' as cValue -- field index out of range?", field);
     }
 }
@@ -1044,7 +1043,6 @@ void ContactTracingMessageDescriptor::setFieldValue(omnetpp::any_ptr object, int
     }
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
-        case FIELD_data: pp->setData(omnetpp::fromAnyPtr<ContactData>(value.pointerValue())); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactTracingMessage'", field);
     }
 }
@@ -1075,7 +1073,7 @@ omnetpp::any_ptr ContactTracingMessageDescriptor::getFieldStructValuePointer(omn
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
         case FIELD_coord: return omnetpp::toAnyPtr(&pp->getCoord()); break;
-        case FIELD_data: return omnetpp::toAnyPtr(pp->getData()); break;
+        case FIELD_data: return omnetpp::toAnyPtr(&pp->getData()); break;
         default: return omnetpp::any_ptr(nullptr);
     }
 }
@@ -1092,7 +1090,6 @@ void ContactTracingMessageDescriptor::setFieldStructValuePointer(omnetpp::any_pt
     }
     ContactTracingMessage *pp = omnetpp::fromAnyPtr<ContactTracingMessage>(object); (void)pp;
     switch (field) {
-        case FIELD_data: pp->setData(omnetpp::fromAnyPtr<ContactData>(ptr)); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'ContactTracingMessage'", field);
     }
 }

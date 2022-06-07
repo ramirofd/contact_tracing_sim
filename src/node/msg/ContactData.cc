@@ -22,5 +22,16 @@ ContactData::ContactData(int oUuid, int sUuid) {
 
 ContactData::~ContactData() {
     // TODO Auto-generated destructor stub
+
 }
 
+int ContactData::getOwnId() {
+    return this->ownUUID;
+}
+
+int ContactData::getSeenId() {
+    return this->seenUUID;
+}
+
+ContactData::ContactData() {
+}

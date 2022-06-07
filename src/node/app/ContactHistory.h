@@ -17,15 +17,21 @@
 #define NODE_APP_CONTACTHISTORY_H_
 
 #include "ContactWindow.h"
+#include "src/node/msg/ContactTracingMessage_m.h"
 
 using namespace std;
 
 class ContactHistory {
 private:
-    map<int, vector<ContactWindow*>> *history;
+    map<int, vector<ContactWindow*>*> *history;
+    ContactWindow* getLastWindowFor(ContactData &data);
+    void createNewEntry(ContactData &data);
+    void insertWindow(ContactData &data);
 public:
     ContactHistory();
     virtual ~ContactHistory();
+    void registerContact(ContactData data, double windowTimeThreshold);
+    vector<ContactWindow*>* getAllWindows();
 };
 
 #endif /* NODE_APP_CONTACTHISTORY_H_ */

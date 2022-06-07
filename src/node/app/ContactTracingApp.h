@@ -19,6 +19,7 @@
 #include <omnetpp.h>
 #include <string>
 #include "src/node/msg/ContactTracingMessage_m.h"
+#include "src/node/app/ContactHistory.h"
 #include "inet/mobility/contract/IMobility.h"
 
 using namespace omnetpp;
@@ -33,6 +34,7 @@ class ContactTracingApp : public cSimpleModule
   private:
     vector<cModule*> *nodes;
     IMobility *mobility;
+    ContactHistory *history;
     int id;
 
     void discoverNetworkNodes();
@@ -40,9 +42,11 @@ class ContactTracingApp : public cSimpleModule
     double calculateDistance(ContactTracingMessage *msg);
     bool isInRange(ContactTracingMessage *msg);
     string strUuid();
+    string getFileName();
 
   protected:
     virtual void initialize() override;
+    virtual void finish() override;
     virtual void handleMessage(cMessage *msg) override;
 
   public:

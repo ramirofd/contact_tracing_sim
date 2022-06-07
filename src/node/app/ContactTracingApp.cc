@@ -14,6 +14,7 @@
 // 
 
 #include <iomanip>
+#include <fstream>
 #include "ContactTracingApp.h"
 #include "src/node/msg/ContactData.h"
 #include "inet/mobility/contract/IMobility.h"
@@ -60,6 +61,24 @@ string ContactTracingApp::strUuid(){
     return uuid;
 }
 
+void ContactTracingApp::finish() {
+    stringstream fileName;
+    fileName << "results/"<<this->getFileName()<<".csv";
+    fstream fs;
+    fs.open (fileName.str(), std::fstream::app);
+
+    for(auto it : *this->history->getAllWindows()) {
+        fs << it->asCsv(this->getNodeId());
+    }
+
+    fs.close();
+}
+
+string ContactTracingApp::getFileName() {
+    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
+    return network->par("fileName").stringValue();
+}
+
 string ContactTracingApp::getNodeName() {
     std::stringstream ss;
     ss << "Node" << this->getNodeId();
@@ -86,7 +105,8 @@ void ContactTracingApp::initialize()
     this->discoverNetworkNodes();
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
     this->id = this->getNodeId();
-    scheduleAfter(par("broadcastTime"), new cMessage());
+    this->history = new ContactHistory();
+    scheduleAfter(par("broadcastTime").doubleValue(), new cMessage());
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
@@ -98,18 +118,14 @@ void ContactTracingApp::handleMessage(cMessage *msg)
 
         ContactTracingMessage *newMsg = new ContactTracingMessage();
         newMsg->setCoord(this->mobility->getCurrentPosition());
-        newMsg->setData(new ContactData(this->id));
+        newMsg->setData(ContactData(this->id));
 
         this->broadcastMsg(newMsg);
-        scheduleAfter(par("broadcastTime"), msg);
+        scheduleAfter(par("broadcastTime").doubleValue(), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
-//            ContactTracingApp *appcpy = check_and_cast<ContactTracingApp*>(cpy->getSenderModule());
-//            EV << "Soy: " << this->getNodeName() << " y "<<((this->isInRange(cpy)==true)?"SI":"NO")
-//                    << " veo a " << appcpy->getNodeName() << " porque esta a: "
-//                    <<this->calculateDistance(cpy)<<"m"<<endl;
-            cpy->getData();
+            this->history->registerContact(cpy->getData(), par("windowTimeThreshold").doubleValue());
         }
         delete msg;
     }
