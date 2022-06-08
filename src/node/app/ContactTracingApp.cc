@@ -41,6 +41,7 @@ void ContactTracingApp::discoverNetworkNodes() {
 void ContactTracingApp::broadcastMsg(ContactTracingMessage *msg) {
     for(cModule *node : *this->nodes)
         this->sendDirect(new ContactTracingMessage(*msg), node->gate("ble"));
+    delete msg;
 }
 
 double ContactTracingApp::calculateDistance(ContactTracingMessage *msg) {
