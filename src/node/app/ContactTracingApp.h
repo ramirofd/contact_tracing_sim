@@ -43,6 +43,7 @@ class ContactTracingApp : public cSimpleModule
     bool isInRange(ContactTracingMessage *msg);
     string strUuid();
     string getFileName();
+    double getRandomDelay();
 
   protected:
     virtual void initialize() override;

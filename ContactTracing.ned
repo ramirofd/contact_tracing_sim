@@ -18,7 +18,7 @@ import src.node.Node;
 network ContactTracing
 {
     parameters:
-        string fileName;
+        string fileName = default("");
         int numNodes;
         @display("bgb=5,5");
     submodules:

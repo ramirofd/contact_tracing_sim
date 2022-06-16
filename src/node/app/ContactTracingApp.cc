@@ -64,7 +64,7 @@ string ContactTracingApp::strUuid(){
 
 void ContactTracingApp::finish() {
     stringstream fileName;
-    fileName << "results/"<<this->getFileName()<<".csv";
+    fileName << "results/"<<this->getFileName();
     fstream fs;
     fs.open (fileName.str(),  std::fstream::app);
 
@@ -77,7 +77,21 @@ void ContactTracingApp::finish() {
 
 string ContactTracingApp::getFileName() {
     cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
-    return network->par("fileName").stringValue();
+
+    stringstream fileName;
+
+    if(strcmp(network->par("fileName").stringValue(), "")!=0)
+    {
+        fileName << network->par("fileName").stringValue()<<"_";
+    }
+
+    fileName << "bt" << par("broadcastTime").doubleValue() << ".csv";
+    return fileName.str();
+}
+
+double ContactTracingApp::getRandomDelay() {
+    double time = par("broadcastTime").doubleValue();
+    return exponential(time);
 }
 
 string ContactTracingApp::getNodeName() {
@@ -107,7 +121,7 @@ void ContactTracingApp::initialize()
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
     this->id = this->getNodeId();
     this->history = new ContactHistory();
-    scheduleAfter(par("broadcastTime").doubleValue(), new cMessage());
+    scheduleAfter(this->getRandomDelay(), new cMessage());
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
@@ -122,7 +136,7 @@ void ContactTracingApp::handleMessage(cMessage *msg)
         newMsg->setData(ContactData(this->id));
 
         this->broadcastMsg(newMsg);
-        scheduleAfter(par("broadcastTime").doubleValue(), msg);
+        scheduleAfter(this->getRandomDelay(), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
