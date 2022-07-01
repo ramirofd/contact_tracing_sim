@@ -69,10 +69,16 @@ void ContactTracingApp::finish() {
     fs.open (fileName.str(),  std::fstream::app);
 
     for(auto it : *this->history->getAllWindows()) {
-        fs << it->asCsv(this->getNodeId());
+        fs << this->asCsv() << "," << it->asCsv() << endl;
     }
 
     fs.close();
+}
+
+string ContactTracingApp::asCsv(){
+    std::stringstream ss;
+    ss << this->getNodeId() <<',' << par("broadcastTime").doubleValue();
+    return ss.str();
 }
 
 string ContactTracingApp::getFileName() {
@@ -85,7 +91,7 @@ string ContactTracingApp::getFileName() {
         fileName << network->par("fileName").stringValue()<<"_";
     }
 
-    fileName << "bt" << par("broadcastTime").doubleValue() << ".csv";
+    fileName << "results.csv";
     return fileName.str();
 }
 

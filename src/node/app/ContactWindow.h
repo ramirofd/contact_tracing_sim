@@ -33,7 +33,7 @@ public:
     virtual ~ContactWindow();
     void updateEndTimestamp(simtime_t end);
     double getWindowLength();
-    string asCsv(int nodeId);
+    string asCsv();
 };
 
 #endif /* NODE_APP_CONTACTWINDOW_H_ */

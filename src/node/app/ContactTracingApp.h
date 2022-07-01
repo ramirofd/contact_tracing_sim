@@ -45,6 +45,7 @@ class ContactTracingApp : public cSimpleModule
     string getFileName();
     double getRandomDelay();
 
+
   protected:
     virtual void initialize() override;
     virtual void finish() override;
@@ -53,6 +54,7 @@ class ContactTracingApp : public cSimpleModule
   public:
     int getNodeId();
     string getNodeName();
+    string asCsv();
 };
 
 #endif
