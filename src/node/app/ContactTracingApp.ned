@@ -25,6 +25,7 @@ simple ContactTracingApp
         int UUID = default(0);
         double range;
         double broadcastTime;
+        double logPosPeriod;
     gates:
         input ble @directIn;
 }

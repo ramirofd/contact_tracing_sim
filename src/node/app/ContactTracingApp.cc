@@ -22,8 +22,6 @@
 using namespace inet;
 using namespace std;
 
-Define_Module(ContactTracingApp);
-
 void ContactTracingApp::discoverNetworkNodes() {
     cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
     for (SubmoduleIterator it(network); !it.end(); ++it) {
@@ -64,7 +62,7 @@ string ContactTracingApp::strUuid(){
 
 void ContactTracingApp::finish() {
     stringstream fileName;
-    fileName << "results/"<<this->getFileName();
+    fileName << "results/"<<this->getFileResultsName();
     fstream fs;
     fs.open (fileName.str(),  std::fstream::app);
 
@@ -81,10 +79,12 @@ string ContactTracingApp::asCsv(){
     return ss.str();
 }
 
-string ContactTracingApp::getFileName() {
+string ContactTracingApp::getFileResultsName() {
     cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
 
     stringstream fileName;
+    fileName << "n" << this->getNodeId()<<"_"<<par("windowTimeThreshold").doubleValue()<<"wt-";
+    fileName <<par("broadcastTime").doubleValue()<<"bt-"<<par("logPosPeriod").doubleValue()<<"lp_";
 
     if(strcmp(network->par("fileName").stringValue(), "")!=0)
     {
@@ -92,6 +92,22 @@ string ContactTracingApp::getFileName() {
     }
 
     fileName << "results.csv";
+    return fileName.str();
+}
+
+string ContactTracingApp::getPositionLogFileName() {
+    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
+
+    stringstream fileName;
+    fileName << "n" << this->getNodeId()<<"_"<<par("windowTimeThreshold").doubleValue()<<"wt-";
+        fileName <<par("broadcastTime").doubleValue()<<"bt-"<<par("logPosPeriod").doubleValue()<<"lp_";
+
+    if(strcmp(network->par("fileName").stringValue(), "")!=0)
+    {
+        fileName << network->par("fileName").stringValue()<<"_";
+    }
+
+    fileName << "position.csv";
     return fileName.str();
 }
 
@@ -127,22 +143,39 @@ void ContactTracingApp::initialize()
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
     this->id = this->getNodeId();
     this->history = new ContactHistory();
-    scheduleAfter(this->getRandomDelay(), new cMessage());
+    this->broadcast = new cMessage();
+    this->logPos = new cMessage();
+    scheduleAfter(this->getRandomDelay(), this->broadcast);
+    scheduleAfter(par("logPosPeriod").doubleValue(), this->logPos);
+}
+
+void ContactTracingApp::logPosition(){
+    stringstream fileName;
+    fileName << "results/"<<this->getPositionLogFileName();
+    fstream fs;
+    fs.open (fileName.str(),  std::fstream::app);
+
+    fs << this->getNodeId() << "," << simTime() << ",";
+    fs << this->mobility->getCurrentPosition().x <<",";
+    fs << this->mobility->getCurrentPosition().y <<endl;
+
+    fs.close();
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
 {
 
-    if(msg->isSelfMessage())
+    if(msg->isSelfMessage() && msg==this->broadcast)
     {
-        //If self message, check whether to broadcast info or execute window closing procedure.
-
         ContactTracingMessage *newMsg = new ContactTracingMessage();
         newMsg->setCoord(this->mobility->getCurrentPosition());
         newMsg->setData(ContactData(this->id));
 
         this->broadcastMsg(newMsg);
         scheduleAfter(this->getRandomDelay(), msg);
+    } else if (msg->isSelfMessage() && msg==this->logPos) {
+        this->logPosition();
+        scheduleAfter(par("logPosPeriod").doubleValue(), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
@@ -151,3 +184,5 @@ void ContactTracingApp::handleMessage(cMessage *msg)
         delete msg;
     }
 }
+
+Define_Module(ContactTracingApp);

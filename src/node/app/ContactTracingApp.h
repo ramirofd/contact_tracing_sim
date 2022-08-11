@@ -35,6 +35,8 @@ class ContactTracingApp : public cSimpleModule
     vector<cModule*> *nodes;
     IMobility *mobility;
     ContactHistory *history;
+    cMessage *broadcast;
+    cMessage *logPos;
     int id;
 
     void discoverNetworkNodes();
@@ -42,8 +44,10 @@ class ContactTracingApp : public cSimpleModule
     double calculateDistance(ContactTracingMessage *msg);
     bool isInRange(ContactTracingMessage *msg);
     string strUuid();
-    string getFileName();
+    string getFileResultsName();
+    string getPositionLogFileName();
     double getRandomDelay();
+    void logPosition();
 
 
   protected:
