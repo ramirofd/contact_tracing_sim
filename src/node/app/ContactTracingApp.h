@@ -48,6 +48,7 @@ class ContactTracingApp : public cSimpleModule
     string getPositionLogFileName();
     double getRandomDelay();
     void logPosition();
+    stringstream baseFileName();
 
 
   protected:

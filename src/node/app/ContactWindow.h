@@ -33,6 +33,7 @@ public:
     virtual ~ContactWindow();
     void updateEndTimestamp(simtime_t end);
     double getWindowLength();
+    double getEndTime();
     string asCsv();
 };
 

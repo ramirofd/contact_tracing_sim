@@ -21,6 +21,8 @@ package src.node.app;
 simple ContactTracingApp
 {
     parameters:
+        bool logres = default(false);
+        bool logpos = default(true);
         double windowTimeThreshold = default(5.0);
         int UUID = default(0);
         double range;

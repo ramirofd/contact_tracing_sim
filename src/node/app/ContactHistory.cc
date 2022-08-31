@@ -48,12 +48,13 @@ void ContactHistory::insertWindow(ContactData &data) {
 
 void ContactHistory::registerContact(ContactData data, double windowTimeThreshold) {
     ContactWindow *last = this->getLastWindowFor(data);
+    simtime_t currentTime = simTime();
     if(last==nullptr){
         this->createNewEntry(data);
         this->insertWindow(data);
     } else {
-        if(last->getWindowLength()<=windowTimeThreshold)
-            last->updateEndTimestamp(simTime());
+        if((currentTime.dbl()-last->getEndTime())<=windowTimeThreshold)
+            last->updateEndTimestamp(currentTime);
         else
             this->insertWindow(data);
     }

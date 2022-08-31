@@ -61,16 +61,37 @@ string ContactTracingApp::strUuid(){
 }
 
 void ContactTracingApp::finish() {
-    stringstream fileName;
-    fileName << "results/"<<this->getFileResultsName();
-    fstream fs;
-    fs.open (fileName.str(),  std::fstream::app);
+    if(par("logres").boolValue()){
+        stringstream fileName;
+        fileName << "results/"<<this->getFileResultsName();
+        fstream fs;
+        fs.open (fileName.str(),  std::fstream::app);
 
-    for(auto it : *this->history->getAllWindows()) {
-        fs << this->asCsv() << "," << it->asCsv() << endl;
+        for(auto it : *this->history->getAllWindows()) {
+            fs << this->asCsv() << "," << it->asCsv() << endl;
+        }
+
+        fs.close();
+    }
+}
+
+stringstream ContactTracingApp::baseFileName() {
+    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
+    double wt = par("windowTimeThreshold").doubleValue();
+    double bt = par("broadcastTime").doubleValue();
+    double lp = par("logPosPeriod").doubleValue();
+    stringstream fileName;
+    fileName.setf(std::ios::fixed);
+    fileName.precision(2);
+    fileName << "n" << this->getNodeId()<<"_"<<wt<<"wt-";
+        fileName <<bt<<"bt-"<<lp<<"lp_";
+
+    if(strcmp(network->par("fileName").stringValue(), "")!=0)
+    {
+        fileName << network->par("fileName").stringValue()<<"_";
     }
 
-    fs.close();
+    return fileName;
 }
 
 string ContactTracingApp::asCsv(){
@@ -80,32 +101,14 @@ string ContactTracingApp::asCsv(){
 }
 
 string ContactTracingApp::getFileResultsName() {
-    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
-
-    stringstream fileName;
-    fileName << "n" << this->getNodeId()<<"_"<<par("windowTimeThreshold").doubleValue()<<"wt-";
-    fileName <<par("broadcastTime").doubleValue()<<"bt-"<<par("logPosPeriod").doubleValue()<<"lp_";
-
-    if(strcmp(network->par("fileName").stringValue(), "")!=0)
-    {
-        fileName << network->par("fileName").stringValue()<<"_";
-    }
+    stringstream fileName = this->baseFileName();
 
     fileName << "results.csv";
     return fileName.str();
 }
 
 string ContactTracingApp::getPositionLogFileName() {
-    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
-
-    stringstream fileName;
-    fileName << "n" << this->getNodeId()<<"_"<<par("windowTimeThreshold").doubleValue()<<"wt-";
-        fileName <<par("broadcastTime").doubleValue()<<"bt-"<<par("logPosPeriod").doubleValue()<<"lp_";
-
-    if(strcmp(network->par("fileName").stringValue(), "")!=0)
-    {
-        fileName << network->par("fileName").stringValue()<<"_";
-    }
+    stringstream fileName = this->baseFileName();
 
     fileName << "position.csv";
     return fileName.str();
@@ -146,7 +149,8 @@ void ContactTracingApp::initialize()
     this->broadcast = new cMessage();
     this->logPos = new cMessage();
     scheduleAfter(this->getRandomDelay(), this->broadcast);
-    scheduleAfter(par("logPosPeriod").doubleValue(), this->logPos);
+    if(par("logpos").boolValue())
+        scheduleAfter(par("logPosPeriod").doubleValue(), this->logPos);
 }
 
 void ContactTracingApp::logPosition(){

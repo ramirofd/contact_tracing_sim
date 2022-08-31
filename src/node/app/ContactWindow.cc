@@ -37,9 +37,15 @@ double ContactWindow::getWindowLength() {
     return this->end.dbl()-this->start.dbl();
 }
 
+
+
 string ContactWindow::asCsv() {
     std::stringstream ss;
     ss << this->contactId <<',' << this->toldById <<','
             << this->hop <<',' << this->start <<',' << this->end;
     return ss.str();
+}
+
+double ContactWindow::getEndTime() {
+    return this->end.dbl();
 }
