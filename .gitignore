@@ -5,3 +5,5 @@
 Makefile
 *py_ntbks/.ipynb_checkpoints/
 .cmdenv-log
+
+*.idea/
