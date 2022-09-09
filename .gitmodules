@@ -1,0 +1,3 @@
+[submodule ".\\results\\"]
+	path = .\\results\\
+	url = https://github.com/ramirofd/contact_tracing_sim_results
