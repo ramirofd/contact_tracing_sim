@@ -24,7 +24,7 @@ using namespace std;
 class ContactHistory {
 private:
     map<int, vector<ContactWindow*>*> *history;
-    map<int, cOutVector> *contactAccumulator;
+    map<int, double> *contactAccumulator;
     ContactWindow* getLastWindowFor(ContactData &data);
     void updateContactAccumulator(ContactData &data);
     void createNewEntry(ContactData &data);

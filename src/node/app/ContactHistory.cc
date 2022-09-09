@@ -41,18 +41,6 @@ void ContactHistory::createNewEntry(ContactData &data) {
     stringstream vectorName;
     vectorName << "node_" << data.getOwnId();
     this->history->insert(pair<int, vector<ContactWindow*>*>(data.getOwnId(), winList));
-    this->contactAccumulator->insert(pair<int, cOutVector>(data.getOwnId(), cOutVector(vectorName.str())));
-}
-
-void ContactHistory::updateContactAccumulator(ContactData &data, simtime_t currentTime) {
-    map<int, vector<ContactWindow*>*>::iterator it = this->contactAccumulator->find(data.getOwnId());
-    if( it == this->contactAccumulator->end()) {
-        return;
-    } else {
-        // actualizar acumulador con el valor anterior mas la diferencia: currentTime-last->getEndTime()
-        //record acumulador actualizado
-        it->second->recordWithTimestamp(currentTime) ;
-    }
 }
 
 void ContactHistory::insertWindow(ContactData &data) {
@@ -70,20 +58,18 @@ void ContactHistory::registerContact(ContactData data) {
         if(last->isClosed()) {
             this->insertWindow(data);
         } else {
-            this->contactAccumulator->
             last->updateEndTimestamp(currentTime);
-
         }
     }
 }
 
 void ContactHistory::closeContact(ContactData data) {
     ContactWindow *last = this->getLastWindowFor(data);
-    simtime_t currentTime = simTime();
     if(last!=nullptr && !last->isClosed()){
         last->setClosed();
     }
 }
+
 vector<ContactWindow*>* ContactHistory::getAllWindows() {
     vector<ContactWindow*> *list = new vector<ContactWindow*>();
     for(auto it : *this->history) {
