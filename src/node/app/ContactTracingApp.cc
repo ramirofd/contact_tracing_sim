@@ -183,7 +183,9 @@ void ContactTracingApp::handleMessage(cMessage *msg)
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
-            this->history->registerContact(cpy->getData(), par("windowTimeThreshold").doubleValue());
+            this->history->registerContact(cpy->getData());
+        } else {
+            this->history->closeContact(cpy->getData());
         }
         delete msg;
     }

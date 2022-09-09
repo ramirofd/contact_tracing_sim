@@ -15,13 +15,14 @@
 
 #include "ContactWindow.h"
 
-ContactWindow::ContactWindow(int ctId, int tbId, int hop, simtime_t start) {
+ContactWindow::ContactWindow(int ctId, int tbId, int hop, simtime_t start, bool closed) {
     // TODO Auto-generated constructor stub
     this->contactId = ctId;
     this->toldById = tbId;
     this->hop = hop;
     this->start = start;
     this->end = start;
+    this->closed = closed;
 }
 
 ContactWindow::~ContactWindow() {
@@ -37,7 +38,13 @@ double ContactWindow::getWindowLength() {
     return this->end.dbl()-this->start.dbl();
 }
 
+bool ContactWindow::isClosed() {
+    return closed;
+}
 
+void ContactWindow::setClosed() {
+    this->closed=true;
+}
 
 string ContactWindow::asCsv() {
     std::stringstream ss;
