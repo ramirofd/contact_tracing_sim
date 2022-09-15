@@ -116,7 +116,8 @@ string ContactTracingApp::getPositionLogFileName() {
 
 double ContactTracingApp::getRandomDelay() {
     double time = par("broadcastTime").doubleValue();
-    return exponential(time);
+//    return exponential(time); // Por ahora solo tiempo fijo
+    return time;
 }
 
 string ContactTracingApp::getNodeName() {
