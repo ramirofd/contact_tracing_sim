@@ -61,6 +61,10 @@ string ContactTracingApp::strUuid(){
 }
 
 void ContactTracingApp::finish() {
+    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
+    stringstream folderName;
+    folderName << "results/"<<network->par("path").stringValue();
+    _mkdir(folderName.str().c_str());
     if(par("logres").boolValue()){
         stringstream fileName;
         fileName << "results/"<<this->getFileResultsName();
@@ -83,7 +87,7 @@ stringstream ContactTracingApp::baseFileName() {
     stringstream fileName;
     fileName.setf(std::ios::fixed);
     fileName.precision(2);
-    fileName << "n" << this->getNodeId()<<"_"<<wt<<"wt-";
+    fileName << network->par("path").stringValue() << "n" << this->getNodeId()<<"_"<<wt<<"wt-";
         fileName <<bt<<"bt-"<<lp<<"lp_";
 
     if(strcmp(network->par("fileName").stringValue(), "")!=0)
@@ -142,6 +146,7 @@ int ContactTracingApp::getNodeId(){
 
 void ContactTracingApp::initialize()
 {
+
     this->nodes = new vector<cModule*>();
     this->discoverNetworkNodes();
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));

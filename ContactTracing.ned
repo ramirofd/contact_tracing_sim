@@ -19,6 +19,7 @@ network ContactTracing
 {
     parameters:
         string fileName = default("");
+        string path = default("");
         int numNodes;
         @display("bgb=5,5");
     submodules:
