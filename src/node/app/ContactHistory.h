@@ -24,13 +24,16 @@ using namespace std;
 class ContactHistory {
 private:
     map<int, vector<ContactWindow*>*> *history;
+    map<int, double> *contactAccumulator;
     ContactWindow* getLastWindowFor(ContactData &data);
+    void updateContactAccumulator(ContactData &data);
     void createNewEntry(ContactData &data);
     void insertWindow(ContactData &data);
 public:
     ContactHistory();
     virtual ~ContactHistory();
-    void registerContact(ContactData data, double windowTimeThreshold);
+    void registerContact(ContactData data);
+    void closeContact(ContactData data);
     vector<ContactWindow*>* getAllWindows();
 };
 

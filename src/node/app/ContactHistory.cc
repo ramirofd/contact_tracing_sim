@@ -19,6 +19,7 @@ using namespace std;
 
 ContactHistory::ContactHistory() {
     this->history = new map<int, vector<ContactWindow*>*>();
+    this->contactAccumulator = new map<int, double>();
 }
 
 ContactHistory::~ContactHistory() {
@@ -37,7 +38,8 @@ ContactWindow* ContactHistory::getLastWindowFor(ContactData &data) {
 
 void ContactHistory::createNewEntry(ContactData &data) {
     vector<ContactWindow*> *winList = new vector<ContactWindow*>();
-//    winList->push_back(new ContactWindow(data.getOwnId(), -1, 1, simTime()));
+    stringstream vectorName;
+    vectorName << "node_" << data.getOwnId();
     this->history->insert(pair<int, vector<ContactWindow*>*>(data.getOwnId(), winList));
 }
 
@@ -46,17 +48,25 @@ void ContactHistory::insertWindow(ContactData &data) {
     it->second->push_back(new ContactWindow(data.getOwnId()));
 }
 
-void ContactHistory::registerContact(ContactData data, double windowTimeThreshold) {
+void ContactHistory::registerContact(ContactData data) {
     ContactWindow *last = this->getLastWindowFor(data);
     simtime_t currentTime = simTime();
     if(last==nullptr){
         this->createNewEntry(data);
         this->insertWindow(data);
     } else {
-        if((currentTime.dbl()-last->getEndTime())<=windowTimeThreshold)
-            last->updateEndTimestamp(currentTime);
-        else
+        if(last->isClosed()) {
             this->insertWindow(data);
+        } else {
+            last->updateEndTimestamp(currentTime);
+        }
+    }
+}
+
+void ContactHistory::closeContact(ContactData data) {
+    ContactWindow *last = this->getLastWindowFor(data);
+    if(last!=nullptr && !last->isClosed()){
+        last->setClosed();
     }
 }
 

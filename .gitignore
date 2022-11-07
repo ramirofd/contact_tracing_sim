@@ -5,4 +5,8 @@ Makefile
 *py_ntbks/.ipynb_checkpoints/
 .cmdenv-log
 
+<<<<<<< HEAD
 *.idea/
+=======
+.idea/*
+>>>>>>> dual_recording

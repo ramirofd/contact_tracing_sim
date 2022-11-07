@@ -28,12 +28,15 @@ private:
     int hop;
     simtime_t start;
     simtime_t end;
+    bool closed;
 public:
-    ContactWindow(int ctId, int tbId = -1, int hop = 1, simtime_t start = simTime());
+    ContactWindow(int ctId, int tbId = -1, int hop = 1, simtime_t start = simTime(), bool closed = false);
     virtual ~ContactWindow();
     void updateEndTimestamp(simtime_t end);
     double getWindowLength();
     double getEndTime();
+    bool isClosed();
+    void setClosed();
     string asCsv();
 };
 

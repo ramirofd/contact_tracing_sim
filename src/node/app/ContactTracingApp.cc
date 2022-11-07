@@ -81,13 +81,12 @@ void ContactTracingApp::finish() {
 
 stringstream ContactTracingApp::baseFileName() {
     cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
-    double wt = par("windowTimeThreshold").doubleValue();
     double bt = par("broadcastTime").doubleValue();
     double lp = par("logPosPeriod").doubleValue();
     stringstream fileName;
     fileName.setf(std::ios::fixed);
     fileName.precision(2);
-    fileName << network->par("path").stringValue() << "n" << this->getNodeId()<<"_"<<wt<<"wt-";
+    fileName << network->par("path").stringValue() << "n" << this->getNodeId()<<"_";
         fileName <<bt<<"bt-"<<lp<<"lp_";
 
     if(strcmp(network->par("fileName").stringValue(), "")!=0)
@@ -189,7 +188,9 @@ void ContactTracingApp::handleMessage(cMessage *msg)
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
-            this->history->registerContact(cpy->getData(), par("windowTimeThreshold").doubleValue());
+            this->history->registerContact(cpy->getData());
+        } else {
+            this->history->closeContact(cpy->getData());
         }
         delete msg;
     }
