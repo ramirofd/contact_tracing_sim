@@ -15,6 +15,8 @@
 
 #include <iomanip>
 #include <fstream>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "ContactTracingApp.h"
 #include "src/node/msg/ContactData.h"
 #include "inet/mobility/contract/IMobility.h"
@@ -64,7 +66,7 @@ void ContactTracingApp::finish() {
     cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
     stringstream folderName;
     folderName << "results/"<<network->par("path").stringValue();
-    _mkdir(folderName.str().c_str());
+    mkdir(folderName.str().c_str(),0700);
     if(par("logres").boolValue()){
         stringstream fileName;
         fileName << "results/"<<this->getFileResultsName();
