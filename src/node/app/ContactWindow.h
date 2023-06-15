@@ -34,10 +34,15 @@ public:
     virtual ~ContactWindow();
     void updateEndTimestamp(simtime_t end);
     double getWindowLength();
-    double getEndTime();
     bool isClosed();
     void setClosed();
     string asCsv();
+    int getContactId();
+    int getToldById();
+    int getHop();
+    double getStartTime();
+    double getEndTime();
+
 };
 
 #endif /* NODE_APP_CONTACTWINDOW_H_ */

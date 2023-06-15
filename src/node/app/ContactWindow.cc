@@ -53,6 +53,19 @@ string ContactWindow::asCsv() {
     return ss.str();
 }
 
+int ContactWindow::getContactId(){
+    return this->contactId;
+}
+int ContactWindow::getToldById(){
+    return this->toldById;
+}
+int ContactWindow::getHop(){
+    return this->hop;
+}
+double ContactWindow::getStartTime(){
+    return this->start.dbl();
+}
+
 double ContactWindow::getEndTime() {
     return this->end.dbl();
 }

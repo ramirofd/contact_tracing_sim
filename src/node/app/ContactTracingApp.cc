@@ -65,63 +65,10 @@ string ContactTracingApp::strUuid(){
 void ContactTracingApp::finish() {
     cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
     stringstream folderName;
-    folderName << "results/"<<network->par("path").stringValue();
-    mkdir(folderName.str().c_str(),0700);
-    if(par("logres").boolValue()){
-        stringstream fileName;
-        fileName << "results/"<<this->getFileResultsName();
-        fstream fs;
-        fs.open (fileName.str(),  std::fstream::app);
-
-        for(auto it : *this->history->getAllWindows()) {
-            fs << this->asCsv() << "," << it->asCsv() << endl;
-        }
-
-        fs.close();
-    }
-}
-
-stringstream ContactTracingApp::baseFileName() {
-    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
-    double bt = par("broadcastTime").doubleValue();
-    double lp = par("logPosPeriod").doubleValue();
-    stringstream fileName;
-    fileName.setf(std::ios::fixed);
-    fileName.precision(2);
-    fileName << network->par("path").stringValue() << "n" << this->getNodeId()<<"_";
-        fileName <<bt<<"bt-"<<lp<<"lp_";
-
-    if(strcmp(network->par("fileName").stringValue(), "")!=0)
-    {
-        fileName << network->par("fileName").stringValue()<<"_";
-    }
-
-    return fileName;
-}
-
-string ContactTracingApp::asCsv(){
-    std::stringstream ss;
-    ss << this->getNodeId() <<',' << par("broadcastTime").doubleValue();
-    return ss.str();
-}
-
-string ContactTracingApp::getFileResultsName() {
-    stringstream fileName = this->baseFileName();
-
-    fileName << "results.csv";
-    return fileName.str();
-}
-
-string ContactTracingApp::getPositionLogFileName() {
-    stringstream fileName = this->baseFileName();
-
-    fileName << "position.csv";
-    return fileName.str();
 }
 
 double ContactTracingApp::getRandomDelay() {
     double time = par("broadcastTime").doubleValue();
-//    return exponential(time); // Por ahora usamos tiempo fijo para todas las sims
     return time;
 }
 
@@ -147,30 +94,17 @@ int ContactTracingApp::getNodeId(){
 
 void ContactTracingApp::initialize()
 {
-
+    cModule *network = cSimulation::getActiveSimulation()->getSystemModule();
     this->nodes = new vector<cModule*>();
     this->discoverNetworkNodes();
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
     this->id = this->getNodeId();
-    this->history = new ContactHistory();
+    this->history = new ContactHistory(network->par("simName").stringValue(), network->par("simDesc").stringValue());
     this->broadcast = new cMessage();
     this->logPos = new cMessage();
     scheduleAfter(this->getRandomDelay(), this->broadcast);
     if(par("logpos").boolValue())
         scheduleAfter(par("logPosPeriod").doubleValue(), this->logPos);
-}
-
-void ContactTracingApp::logPosition(){
-    stringstream fileName;
-    fileName << "results/"<<this->getPositionLogFileName();
-    fstream fs;
-    fs.open (fileName.str(),  std::fstream::app);
-
-    fs << this->getNodeId() << "," << simTime() << ",";
-    fs << this->mobility->getCurrentPosition().x <<",";
-    fs << this->mobility->getCurrentPosition().y <<endl;
-
-    fs.close();
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
@@ -185,14 +119,14 @@ void ContactTracingApp::handleMessage(cMessage *msg)
         this->broadcastMsg(newMsg);
         scheduleAfter(this->getRandomDelay(), msg);
     } else if (msg->isSelfMessage() && msg==this->logPos) {
-        this->logPosition();
+//        this->logPosition();
         scheduleAfter(par("logPosPeriod").doubleValue(), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
             this->history->registerContact(cpy->getData());
         } else {
-            this->history->closeContact(cpy->getData());
+            this->history->closeContact(this->id, cpy->getData());
         }
         delete msg;
     }

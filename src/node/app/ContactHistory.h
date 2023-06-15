@@ -18,22 +18,23 @@
 
 #include "ContactWindow.h"
 #include "src/node/msg/ContactTracingMessage_m.h"
+#include "src/node/app/DataBaseConn.h"
 
 using namespace std;
 
 class ContactHistory {
 private:
-    map<int, vector<ContactWindow*>*> *history;
-    map<int, double> *contactAccumulator;
+    map<int, ContactWindow*> *history;
     ContactWindow* getLastWindowFor(ContactData &data);
+    void setEmpty(ContactData &data);
     void updateContactAccumulator(ContactData &data);
     void createNewEntry(ContactData &data);
-    void insertWindow(ContactData &data);
 public:
     ContactHistory();
+    ContactHistory(const char* name, const char* desc);
     virtual ~ContactHistory();
     void registerContact(ContactData data);
-    void closeContact(ContactData data);
+    void closeContact(int node, ContactData data);
     vector<ContactWindow*>* getAllWindows();
 };
 

@@ -18,8 +18,8 @@ import src.node.Node;
 network ContactTracing
 {
     parameters:
-        string fileName = default("");
-        string path = default("");
+        string simName = default("");
+        string simDesc = default("");
         int numNodes;
         @display("bgb=5,5");
     submodules:

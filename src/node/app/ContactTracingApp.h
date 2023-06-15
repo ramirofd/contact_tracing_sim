@@ -44,12 +44,7 @@ class ContactTracingApp : public cSimpleModule
     double calculateDistance(ContactTracingMessage *msg);
     bool isInRange(ContactTracingMessage *msg);
     string strUuid();
-    string getFileResultsName();
-    string getPositionLogFileName();
     double getRandomDelay();
-    void logPosition();
-    stringstream baseFileName();
-
 
   protected:
     virtual void initialize() override;
@@ -59,7 +54,6 @@ class ContactTracingApp : public cSimpleModule
   public:
     int getNodeId();
     string getNodeName();
-    string asCsv();
 };
 
 #endif
