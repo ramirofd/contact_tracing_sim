@@ -69,11 +69,11 @@ void ContactHistory::registerContact(ContactData data) {
     }
 }
 
-void ContactHistory::closeContact(int node, ContactData data) {
+void ContactHistory::closeContact(int node, ContactData data, double node_velocity) {
     ContactWindow *last = this->getLastWindowFor(data);
     if(last!=nullptr){
         EV<<"Stored";
-        DataBaseConn::getInstance().insertWindow(node,last);
+        DataBaseConn::getInstance().insertWindow(node,last, node_velocity);
         this->setEmpty(data);
     }
 }

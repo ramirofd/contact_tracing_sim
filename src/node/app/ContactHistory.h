@@ -34,7 +34,7 @@ public:
     ContactHistory(const char* name, const char* desc);
     virtual ~ContactHistory();
     void registerContact(ContactData data);
-    void closeContact(int node, ContactData data);
+    void closeContact(int node, ContactData data, double node_velocity);
     vector<ContactWindow*>* getAllWindows();
 };
 

@@ -30,5 +30,6 @@ module Node
         mobility: <default("StationaryMobility")> like IMobility {
             @display("p=31,31;is=s");
         }
+    
 
 }

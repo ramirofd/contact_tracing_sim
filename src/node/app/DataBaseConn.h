@@ -27,7 +27,7 @@ public:
         static DataBaseConn instance;
         return instance;
     }
-    void insertWindow(int node, ContactWindow* win);
+    void insertWindow(int node, ContactWindow* win, double velocity);
     void insertSimulation(const char* name,const char* description);
 
 private:

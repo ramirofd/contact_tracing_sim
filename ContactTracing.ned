@@ -21,7 +21,7 @@ network ContactTracing
         string simName = default("");
         string simDesc = default("");
         int numNodes;
-        @display("bgb=5,5");
+        @display("bgb=1120,1120");
     submodules:
         nodes[numNodes]: Node;
 }

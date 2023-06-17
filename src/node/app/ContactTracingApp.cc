@@ -101,10 +101,10 @@ void ContactTracingApp::initialize()
     this->id = this->getNodeId();
     this->history = new ContactHistory(network->par("simName").stringValue(), network->par("simDesc").stringValue());
     this->broadcast = new cMessage();
-    this->logPos = new cMessage();
+//    this->logPos = new cMessage();
     scheduleAfter(this->getRandomDelay(), this->broadcast);
-    if(par("logpos").boolValue())
-        scheduleAfter(par("logPosPeriod").doubleValue(), this->logPos);
+//    if(par("logpos").boolValue())
+//        scheduleAfter(par("logPosPeriod").doubleValue(), this->logPos);
 }
 
 void ContactTracingApp::handleMessage(cMessage *msg)
@@ -118,15 +118,15 @@ void ContactTracingApp::handleMessage(cMessage *msg)
 
         this->broadcastMsg(newMsg);
         scheduleAfter(this->getRandomDelay(), msg);
-    } else if (msg->isSelfMessage() && msg==this->logPos) {
+//    } else if (msg->isSelfMessage() && msg==this->logPos) {
 //        this->logPosition();
-        scheduleAfter(par("logPosPeriod").doubleValue(), msg);
+//        scheduleAfter(par("logPosPeriod").doubleValue(), msg);
     } else {
         ContactTracingMessage *cpy = check_and_cast<ContactTracingMessage*>(msg);
         if(this->isInRange(cpy)){
             this->history->registerContact(cpy->getData());
         } else {
-            this->history->closeContact(this->id, cpy->getData());
+            this->history->closeContact(this->id, cpy->getData(), this->mobility->getCurrentVelocity().length());
         }
         delete msg;
     }
