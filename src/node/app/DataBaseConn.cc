@@ -15,8 +15,8 @@
 
 #include "DataBaseConn.h"
 
-DataBaseConn::DataBaseConn() {
-    if(sqlite3_open("results.db", &this->myDB) != SQLITE_OK) {
+DataBaseConn::DataBaseConn(const char* dbName) {
+    if(sqlite3_open(dbName, &this->myDB) != SQLITE_OK) {
         sqlite3_close(this->myDB);
         throw std::runtime_error("An error occurred during DB connection");
     }

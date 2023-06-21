@@ -23,8 +23,8 @@
 using namespace omnetpp;
 class DataBaseConn {
 public:
-    static DataBaseConn& getInstance(){
-        static DataBaseConn instance;
+    static DataBaseConn& getInstance(const char* dbName){
+        static DataBaseConn instance(dbName);
         return instance;
     }
     void insertWindow(int node, ContactWindow* win, double velocity);
@@ -32,7 +32,7 @@ public:
 
 private:
     //Con-Destructors
-    DataBaseConn();
+    DataBaseConn(const char* dbName);
     virtual ~DataBaseConn();
 
     // Operators

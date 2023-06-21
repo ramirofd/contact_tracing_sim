@@ -5,8 +5,7 @@ Makefile
 *py_ntbks/.ipynb_checkpoints/
 .cmdenv-log
 
-<<<<<<< HEAD
 *.idea/
-=======
 .idea/*
->>>>>>> dual_recording
+*.db
+contact_tracing_sim

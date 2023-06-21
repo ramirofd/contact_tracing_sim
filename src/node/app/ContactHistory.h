@@ -24,6 +24,7 @@ using namespace std;
 
 class ContactHistory {
 private:
+    string dbName;
     map<int, ContactWindow*> *history;
     ContactWindow* getLastWindowFor(ContactData &data);
     void setEmpty(ContactData &data);
@@ -31,7 +32,7 @@ private:
     void createNewEntry(ContactData &data);
 public:
     ContactHistory();
-    ContactHistory(const char* name, const char* desc);
+    ContactHistory(const char* dbName, const char* name, const char* desc);
     virtual ~ContactHistory();
     void registerContact(ContactData data);
     void closeContact(int node, ContactData data, double node_velocity);

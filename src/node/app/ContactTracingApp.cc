@@ -99,7 +99,7 @@ void ContactTracingApp::initialize()
     this->discoverNetworkNodes();
     this->mobility = check_and_cast<IMobility *>(this->getParentModule()->getSubmodule("mobility"));
     this->id = this->getNodeId();
-    this->history = new ContactHistory(network->par("simName").stringValue(), network->par("simDesc").stringValue());
+    this->history = new ContactHistory(par("dbName").stringValue(), network->par("simName").stringValue(), network->par("simDesc").stringValue());
     this->broadcast = new cMessage();
 //    this->logPos = new cMessage();
     scheduleAfter(this->getRandomDelay(), this->broadcast);

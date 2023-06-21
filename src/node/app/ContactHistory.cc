@@ -21,9 +21,10 @@ ContactHistory::ContactHistory(){
     // TODO Auto-generated constructor stub
 }
 
-ContactHistory::ContactHistory(const char* name, const char* desc) {
+ContactHistory::ContactHistory(const char* dbName, const char* name, const char* desc) {
     this->history = new map<int, ContactWindow*>();
-    DataBaseConn::getInstance().insertSimulation(name, desc);
+    this->dbName = dbName;
+    DataBaseConn::getInstance(dbName).insertSimulation(name, desc);
 }
 
 ContactHistory::~ContactHistory() {
@@ -73,7 +74,7 @@ void ContactHistory::closeContact(int node, ContactData data, double node_veloci
     ContactWindow *last = this->getLastWindowFor(data);
     if(last!=nullptr){
         EV<<"Stored";
-        DataBaseConn::getInstance().insertWindow(node,last, node_velocity);
+        DataBaseConn::getInstance(this->dbName.c_str()).insertWindow(node,last, node_velocity);
         this->setEmpty(data);
     }
 }

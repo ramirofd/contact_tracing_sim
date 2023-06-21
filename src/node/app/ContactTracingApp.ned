@@ -24,6 +24,7 @@ simple ContactTracingApp
         bool logres = default(false);
         bool logpos = default(true);
         int UUID = default(0);
+        string dbName = default("results.db");
         double range;
         double broadcastTime;
         double windowTimeThreshold = default(5.0);
